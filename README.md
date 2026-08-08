@@ -47,9 +47,11 @@ Client / Postman
     Models
        ↓
     MongoDB
+```
 
 The transaction system follows a ledger-based approach:
 
+```text
 User A Account
       │
       │ Debit
@@ -59,11 +61,13 @@ User A Account
       │ Credit
       ▼
 User B Account
+```
 
 Account balance is calculated from ledger entries:
 
+```text
 Balance = Total Credits - Total Debits
-
+```
 
 ## 📁 Project Structure
 
@@ -85,6 +89,7 @@ ledger-transaction-system/
 ├── package-lock.json
 ├── server.js
 └── README.md
+```
 
 ## 🔌 API Endpoints
 
@@ -111,7 +116,6 @@ ledger-transaction-system/
 | POST | `/api/transaction` | Transfer money between accounts |
 | POST | `/api/transaction/system/initial-funds` | Add initial funds using system user |
 
-
 ## 🔐 Authentication
 
 The API uses JWT-based authentication to protect private routes.
@@ -122,10 +126,11 @@ Example:
 
 ```text
 Authorization: Bearer <JWT_TOKEN>
+```
 
-Authentication Flow
+### Authentication Flow
 
-
+```text
 Register
    ↓
 Login
@@ -139,14 +144,13 @@ Protected Request
 JWT Verification
    ↓
 Access Granted
+```
 
-
-Logout & Token Blacklisting
+### Logout & Token Blacklisting
 
 When a user logs out, the JWT token is added to a blacklist and the authentication cookie is cleared.
 
 Any future request using the blacklisted token is rejected.
-
 
 ## 💸 Transaction Flow
 
@@ -172,11 +176,14 @@ A money transfer is processed using an atomic transaction flow:
 9. Commit MongoDB transaction
         ↓
 10. Send transaction email
+```
 
 Each successful transfer creates two ledger entries:
-    Sender Account → DEBIT
-    Receiver Account → CREDIT
 
+```text
+Sender Account → DEBIT
+Receiver Account → CREDIT
+```
 
 ## 🔄 Idempotency
 
@@ -191,13 +198,17 @@ Each transaction request must contain a unique idempotency key:
   "amount": 2000,
   "idempotencyKey": "unique-transfer-key"
 }
+```
 
-If the same request is submitted again with the same idempotencyKey, the existing transaction is detected and a duplicate transaction is not created.
+If the same request is submitted again with the same `idempotencyKey`, the existing transaction is detected and a duplicate transaction is not created.
 
 Example response:
+
+```json
 {
   "message": "Transaction already completed"
 }
+```
 
 ## 🛡️ Security
 
@@ -221,11 +232,11 @@ Example:
 PORT=3001
 MONGO_URI=your_mongodb_connection_string
 JWT_SECRET=your_jwt_secret
-
+```
 
 If email functionality is configured, add the required email service variables as well.
 
-Never commit the actual .env file to GitHub. Use .env.example as a reference.
+> Never commit the actual `.env` file to GitHub. Use `.env.example` as a reference.
 
 ## 💻 Installation & Setup
 
@@ -233,32 +244,49 @@ Never commit the actual .env file to GitHub. Use .env.example as a reference.
 
 ```bash
 git clone https://github.com/Kushdubey005/ledger-transaction-system.git
+```
 
-2. Navigate to the project
+### 2. Navigate to the project
 
+```bash
 cd ledger-transaction-system
+```
 
-3. Install dependencies
+### 3. Install dependencies
 
+```bash
 npm install
+```
 
-4. Configure environment variables
-Create a .env file in the project root and add your MongoDB connection string and JWT secret.
+### 4. Configure environment variables
 
-5. Start the server
+Create a `.env` file in the project root and add your MongoDB connection string and JWT secret.
 
+### 5. Start the server
+
+```bash
 node server.js
+```
 
-The API will run at:http://localhost:3001
+The API will run at:
 
-6. Test the API
+```text
+http://localhost:3001
+```
 
-Open:http://localhost:3001/
+### 6. Test the API
 
-Expected response:Ledger Transaction System API is running
+Open:
 
+```text
+http://localhost:3001/
+```
 
+Expected response:
 
+```text
+Ledger Transaction System API is running
+```
 
 ## 🧪 API Testing
 
@@ -285,33 +313,37 @@ The API was tested using Postman with both successful and failure scenarios.
 
 The testing demonstrated authentication, authorization, transaction processing, ledger-based balance calculation, and error handling.
 
-
 ## 📸 API Testing Screenshots
 
 ### 🔐 Authentication
 
 Postman testing for user registration, login, and authentication errors.
+
 ![Register Success](Screenshots/register-success.png)
+
 ![Login Success](Screenshots/login-success.png)
 
 ### 🏦 Account Management
 
 Account creation, account retrieval, and ledger-based balance verification.
+
 ![Account Created](Screenshots/account-created.png)
 
 ### 💸 Transaction Processing
 
-Initial funds, successful money transfer, insufficient funds, and idempotency testing.
-![Initial Funds](Screenshots/initial-funds.png)
-![Successful Transfer](Screenshots/successful-transfer.png)
-![Idempotency Test](Screenshots/idempotency.png)
+Initial funds, successful money transfer, and idempotency testing.
 
+![Initial Funds](Screenshots/initial-funds.png)
+
+![Successful Transfer](Screenshots/successful-transfer.png)
+
+![Idempotency Test](Screenshots/idempotency.png)
 
 ### 🛡️ Security Testing
 
 Testing unauthorized access, invalid JWT tokens, cross-user account access, and blacklisted tokens.
-![Security Test](Screenshots/security.png)
 
+![Security Test](Screenshots/security.png)
 
 ## 🔮 Future Improvements
 
