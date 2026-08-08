@@ -291,18 +291,27 @@ The testing demonstrated authentication, authorization, transaction processing, 
 ### 🔐 Authentication
 
 Postman testing for user registration, login, and authentication errors.
+![Register Success](Screenshots/register-success.png)
+![Login Success](Screenshots/login-success.png)
 
 ### 🏦 Account Management
 
 Account creation, account retrieval, and ledger-based balance verification.
+![Account Created](Screenshots/account-created.png)
 
 ### 💸 Transaction Processing
 
 Initial funds, successful money transfer, insufficient funds, and idempotency testing.
+![Initial Funds](Screenshots/initial-funds.png)
+![Successful Transfer](Screenshots/successful-transfer.png)
+![Idempotency Test](Screenshots/idempotency.png)
+
 
 ### 🛡️ Security Testing
 
 Testing unauthorized access, invalid JWT tokens, cross-user account access, and blacklisted tokens.
+![Security Test](Screenshots/security.png)
+
 
 ## 🔮 Future Improvements
 
